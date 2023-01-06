@@ -6,7 +6,7 @@ use App\Http\Requests\Posts\CreatePostsRequest;
 use Illuminate\Http\Request;
 
 use App\Post;
-
+use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
 {
@@ -45,7 +45,8 @@ class PostsController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'content' => $request->content,
-            'image' => $image
+            'image' => $image,
+            'published_at' => $request->published_at,
         ]);
         // flash the message
         session()->flash('success', 'Post Created Successfully');
@@ -98,6 +99,7 @@ class PostsController extends Controller
     {
         $post = Post::withTrashed()->where('id', $id)->firstOrFail();
         if ($post->trashed()) {
+            Storage::delete($post->image);
             $post->forceDelete();
         } else {
             $post->delete();

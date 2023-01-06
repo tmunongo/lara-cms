@@ -27,13 +27,14 @@
                 <label for="content">
                     Content
                 </label>
-                <textarea type="text" cols="5" rows="8" class="form-control" name="content" id="content"></textarea>
+                <input id="content" type="hidden" name="content">
+                <trix-editor input="content"></trix-editor>
             </div>
             <div class="form-group">
                 <label for="published_at">
                     Published At
                 </label>
-                <input type="date" class="form-control" name="published_at" id="published_at">
+                <input type="datetime-local" class="form-control" name="published_at" id="published_at">
             </div>
             <div class="form-group">
                 <label for="image">
@@ -49,4 +50,17 @@
         </form>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    // flatpickr('#published_at');
+</script>
+@endsection
+
+@section('css')
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @endsection
