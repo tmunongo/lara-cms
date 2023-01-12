@@ -94,6 +94,11 @@ class CategoriesController extends Controller
      */
     public function destroy(Category $category)
     {
+        if ($category->posts->count() > 0) {
+            session()->flash('error', 'Cannot delete a category with more than one post.');
+
+            return redirect()->back();
+        }
         $category->delete();
         session()->flash('success', 'Category deleted successfully');
 

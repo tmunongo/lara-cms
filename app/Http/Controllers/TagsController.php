@@ -92,9 +92,14 @@ class TagsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tag $Tag)
+    public function destroy(Tag $tag)
     {
-        $Tag->delete();
+        if ($tag->posts->count() > 0) {
+            session()->flash('error', 'Cannot delete a tag with more than one post.');
+
+            return redirect()->back();
+        }
+        $tag->delete();
         session()->flash('success', 'Tag deleted successfully');
 
         return redirect(route('tags.index'));
